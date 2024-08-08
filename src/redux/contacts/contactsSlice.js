@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './operations';
+import { fetchContacts, addContact, deleteContact } from './contactOperations';
 
 const initialContactsState = {
   contacts: [],
@@ -120,6 +120,9 @@ export const contactsSlice = createSlice({
       });
   },
 });
+
+// Export actions
+export const contactsReducer = contactsSlice.reducer;
 
 // meaning of chaining functions
 // we will chain the function calls

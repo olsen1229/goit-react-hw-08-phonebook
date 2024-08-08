@@ -1,18 +1,19 @@
-import { combineReducers } from 'redux';
-//import { devToolsEnhancer } from '@redux-devtools/extension';
 import { configureStore } from '@reduxjs/toolkit';
-import { contactsSlice } from './contactsSlice';
-import { filterSlice } from './filterSlice';
+import { contactsSlice } from './contacts/contactsSlice';
+import { filterSlice } from './filter/filterSlice';
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+import { authReducer } from './auth/authSlice';
 
 //import { persistStore, persistReducer } from 'redux-persist';
 //import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
 
 
 // Combine your reducers
-const rootReducer = combineReducers({
-  contacts: contactsSlice.reducer,
-  filter: filterSlice.reducer,
-});
+//const rootReducer = combineReducers({
+  //contacts: contactsSlice.reducer,
+  //filter: filterSlice.reducer,
+//});
 
 // Create the persist config object
 //const persistConfig = {
@@ -34,6 +35,25 @@ const rootReducer = combineReducers({
  //   }),
 //});
 
+// Persisting token field from auth slice to localstorage
+const authPersistConfig = {
+  key: 'auth',
+  storage,
+  whitelist: ['token'],
+};
+
 export const store = configureStore({
-  reducer: rootReducer
-})
+  reducer: {
+    auth: persistReducer(authPersistConfig, authReducer),
+    contacts: contactsSlice.reducer,
+    filter: filterSlice.reducer,
+  },
+  middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+});
+export const persistor = persistStore(store);
+//export const store = configureStore({
+  //reducer: rootReducer
+//});

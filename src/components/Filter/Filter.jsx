@@ -8,7 +8,7 @@ export const Filter = ({ filter, setFilter }) => {
         setFilter(e.target.value);
     };
     return (
-        <div className={css.container}>
+        <div className={css.divFilter}>
             <p>Find Contacts by Name</p>
             <input
                 type="text"

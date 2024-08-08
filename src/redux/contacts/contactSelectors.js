@@ -30,17 +30,22 @@ export const selectVisibleContacts = createSelector(
 
     // if the filter string dependency is present, generate the lower case filter to normalize the search query
     const lowerCaseFilter = filter.toLowerCase();
+    return contacts.filter(contact =>
+      contact.name.toLowerCase().includes(lowerCaseFilter)
+    );
+
+
 
     // filter the visible contacts
-    const visibleContacts = contacts.filter(contact => {
+   // const visibleContacts = contacts.filter(contact => {
       // convert the contact to all lower cases
-      const lowerCaseContact = contact.toLowerCase();
+    //  const lowerCaseContact = contact.toLowerCase();
 
       // compare if the lower case contact is the same to the lower case filter
-      return lowerCaseContact.includes(lowerCaseFilter);
-    });
+    //  return lowerCaseContact.includes(lowerCaseFilter);
+    //});
 
     // return the visible contacts after filtering
-    return visibleContacts;
+   // return visibleContacts;
   }
 );
